@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "prisma generate && tsc --project tsconfig.json",
     "start": "node dist/server.js",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -58,5 +58,8 @@
     "prisma": "^7.3.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

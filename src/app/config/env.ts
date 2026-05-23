@@ -27,7 +27,7 @@ export const env = {
   CLOUDINARY_CLOUD_NAME: optional("CLOUDINARY_CLOUD_NAME"),
   CLOUDINARY_API_KEY: optional("CLOUDINARY_API_KEY"),
   CLOUDINARY_API_SECRET: optional("CLOUDINARY_API_SECRET"),
-  ALLOWED_ORIGINS: optional("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001"),
+  ALLOWED_ORIGINS: optional("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001,https://frontend-rose-ten-79.vercel.app"),
   EMAIL_SENDER: {
     SMTP_HOST: optional("SMTP_HOST", "smtp.gmail.com"),
     SMTP_PORT: optional("SMTP_PORT", "587"),

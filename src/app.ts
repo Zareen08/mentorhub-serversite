@@ -21,10 +21,34 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get("/health", (_req: Request, res: Response) => res.json({ success: true, message: "MentorHub API running", env: env.NODE_ENV }));
+// Root route
+app.get("/", (_req: Request, res: Response) => {
+  res.json({ 
+    success: true, 
+    message: "Welcome to MentorHub API",
+    version: "1.0.0",
+    endpoints: {
+      health: "/health",
+      auth: "/api/auth",
+      api: "/api/v1"
+    }
+  });
+});
 
+// Health check route
+app.get("/health", (_req: Request, res: Response) => {
+  res.json({ 
+    success: true, 
+    message: "MentorHub API running", 
+    env: env.NODE_ENV,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// API routes
 app.use("/api/v1", IndexRoutes);
 
+// Error handlers (keep these at the end)
 app.use(globalErrorHandler);
 app.use(notFound);
 

@@ -15,25 +15,56 @@ const getAllUsers = async (query) => {
     const page = Number(query.page) || 1;
     const limit = Number(query.limit) || 10;
     const [data, total] = await Promise.all([
-        prisma.user.findMany({ where, skip: (page - 1) * limit, take: limit, orderBy: { createdAt: "desc" },
-            select: { id: true, name: true, email: true, role: true, status: true, image: true, createdAt: true, emailVerified: true } }),
+        prisma.user.findMany({
+            where,
+            skip: (page - 1) * limit,
+            take: limit,
+            orderBy: { createdAt: "desc" },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                status: true,
+                image: true,
+                createdAt: true,
+                emailVerified: true
+            }
+        }),
         prisma.user.count({ where }),
     ]);
     return { data, meta: { page, limit, total, totalPages: Math.ceil(total / limit) } };
 };
 const updateUserStatus = async (userId, data) => {
-    return prisma.user.update({ where: { id: userId }, data });
+    // Cast to proper enum types using 'as any' to bypass type checking
+    return prisma.user.update({
+        where: { id: userId },
+        data: {
+            ...(data.status && { status: data.status }),
+            ...(data.role && { role: data.role })
+        }
+    });
 };
 const getUserProfile = async (userId) => {
-    const profile = await prisma.userProfile.findUnique({ where: { userId }, include: { user: true } });
+    const profile = await prisma.userProfile.findUnique({
+        where: { userId },
+        include: { user: true }
+    });
     if (!profile)
         throw new AppError(status.NOT_FOUND, "Profile not found");
     return profile;
 };
 const updateUserProfile = async (userId, payload) => {
     const { name, image, ...profileData } = payload;
-    if (name || image)
-        await prisma.user.update({ where: { id: userId }, data: { ...(name && { name }), ...(image && { image }) } });
+    if (name || image) {
+        await prisma.user.update({
+            where: { id: userId },
+            data: {
+                ...(name && { name }),
+                ...(image && { image })
+            }
+        });
+    }
     return prisma.userProfile.upsert({
         where: { userId },
         create: { userId, ...profileData },
@@ -42,6 +73,19 @@ const updateUserProfile = async (userId, payload) => {
     });
 };
 const deleteUser = async (userId) => {
-    return prisma.user.update({ where: { id: userId }, data: { isDeleted: true, status: "DELETED", deletedAt: new Date() } });
+    return prisma.user.update({
+        where: { id: userId },
+        data: {
+            isDeleted: true,
+            status: "DELETED", // Cast to any to bypass type checking
+            deletedAt: new Date()
+        }
+    });
 };
-export const UserService = { getAllUsers, updateUserStatus, getUserProfile, updateUserProfile, deleteUser };
+export const UserService = {
+    getAllUsers,
+    updateUserStatus,
+    getUserProfile,
+    updateUserProfile,
+    deleteUser
+};

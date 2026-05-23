@@ -13,7 +13,7 @@ pnpm-debug.log*
 .env.test
 
 # Build outputs
-
+dist/
 build/
 *.tsbuildinfo
 
@@ -28,7 +28,6 @@ prisma/migrations/*.db
 # Logs
 logs/
 *.log
-logs/
 log/
 npm-debug.log*
 yarn-debug.log*
@@ -56,7 +55,7 @@ Thumbs.db
 .settings/
 *.iml
 
-# Coverage directory used by tools like istanbul
+# Coverage directory
 coverage/
 *.lcov
 
@@ -64,5 +63,55 @@ coverage/
 typings/
 
 # Runtime data
-
+*.pid
 *.seed
+*.pid.lock
+
+# Vercel (only if deploying to Vercel, remove if using Render)
+# .vercel/
+
+# Render (keep these)
+# .render/ - Commented out to keep if needed
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Uploads
+uploads/
+temp-uploads/
+public/uploads/
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.cert
+
+# Backup files
+*.bak
+*.backup
+
+# PM2
+.pm2/
+pm2.log
+
+# Docker
+docker-compose.override.yml
+
+# Database files
+*.sql
+*.sql.gz
+*.dump
+
+# User uploads
+profile-images/
+documents/
+media/
+
+# TypeScript
+*.tsbuildinfo
+
+# Debug
+debug.log

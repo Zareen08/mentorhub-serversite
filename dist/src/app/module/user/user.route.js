@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { UserController } from "./user.controller.js";
+const router = Router();
+router.get("/", checkAuth("ADMIN", "SUPER_ADMIN"), UserController.getAll);
+router.get("/profile", checkAuth(), UserController.getProfile);
+router.patch("/profile", checkAuth(), UserController.updateProfile);
+router.patch("/:id/status", checkAuth("ADMIN", "SUPER_ADMIN"), UserController.updateStatus);
+router.delete("/:id", checkAuth("ADMIN", "SUPER_ADMIN"), UserController.deleteUser);
+export const UserRoutes = router;

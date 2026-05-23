@@ -1,0 +1,19 @@
+model Review {
+  id          String      @id @default(uuid(7))
+  bookingId   String      @unique
+  booking     Booking     @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  userId      String
+  userProfile UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mentorId    String
+  mentor      Mentor      @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  rating      Float       @default(0.0)
+  comment     String?     @db.Text
+  sentiment   Json?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([mentorId])
+  @@index([userId])
+  @@index([rating])
+  @@map("reviews")
+}

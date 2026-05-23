@@ -1,0 +1,64 @@
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  MENTOR
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PAID
+  UNPAID
+}
+
+enum AILogType {
+  RECOMMENDATION
+  CHAT
+  MATCHING
+  INSIGHT
+  SUMMARY
+  SENTIMENT
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_CANCELLED
+  REVIEW_RECEIVED
+  PAYMENT_RECEIVED
+  SYSTEM
+}
+
+enum Availability {
+  MONDAY_AM
+  MONDAY_PM
+  TUESDAY_AM
+  TUESDAY_PM
+  WEDNESDAY_AM
+  WEDNESDAY_PM
+  THURSDAY_AM
+  THURSDAY_PM
+  FRIDAY_AM
+  FRIDAY_PM
+  SATURDAY_AM
+  SATURDAY_PM
+  SUNDAY_AM
+  SUNDAY_PM
+}

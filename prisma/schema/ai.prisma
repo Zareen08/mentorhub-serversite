@@ -1,0 +1,13 @@
+model AILog {
+  id         String      @id @default(uuid(7))
+  userId     String?
+  userProfile UserProfile? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  type       AILogType
+  prompt     String      @db.Text
+  response   String      @db.Text
+  createdAt  DateTime    @default(now())
+
+  @@index([userId])
+  @@index([type])
+  @@map("ai_logs")
+}

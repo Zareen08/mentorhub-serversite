@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { MentorController } from "./mentor.controller.js";
+const router = Router();
+router.get("/", MentorController.getAllMentors);
+router.get("/dashboard", checkAuth("MENTOR", "SUPER_ADMIN"), MentorController.getMentorDashboard);
+router.get("/:id", MentorController.getMentorById);
+router.post("/", checkAuth("USER", "ADMIN", "SUPER_ADMIN"), MentorController.createMentorProfile);
+router.patch("/", checkAuth("MENTOR", "SUPER_ADMIN"), MentorController.updateMentorProfile);
+export const MentorRoutes = router;

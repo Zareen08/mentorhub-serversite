@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { AnalyticsController } from "./analytics.controller.js";
+const router = Router();
+router.get("/platform", AnalyticsController.getPlatformStats);
+router.get("/top-mentors", AnalyticsController.getTopMentors);
+router.get("/booking-trends", checkAuth(), AnalyticsController.getBookingTrends);
+router.get("/mentor", checkAuth("MENTOR", "SUPER_ADMIN"), AnalyticsController.getMentorAnalytics);
+router.get("/admin", checkAuth("ADMIN", "SUPER_ADMIN"), AnalyticsController.getAdminDashboard);
+export const AnalyticsRoutes = router;

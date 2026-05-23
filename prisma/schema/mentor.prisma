@@ -1,0 +1,31 @@
+model Mentor {
+  id            String         @id @default(uuid(7))
+  userId        String         @unique
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title         String
+  company       String?
+  experience    Int            @default(0)
+  hourlyRate    Float
+  skills        String[]
+  availability  Availability[]
+  bio           String?        @db.Text
+  profilePhoto  String?
+  isActive      Boolean        @default(true)
+  totalSessions Int            @default(0)
+  totalEarnings Float          @default(0)
+  averageRating Float          @default(0.0)
+  totalReviews  Int            @default(0)
+  isDeleted     Boolean        @default(false)
+  deletedAt     DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  bookings Booking[]
+  reviews  Review[]
+
+  @@index([userId])
+  @@index([isActive])
+  @@index([hourlyRate])
+  @@index([isDeleted])
+  @@map("mentors")
+}

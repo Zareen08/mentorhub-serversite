@@ -1,0 +1,25 @@
+model Booking {
+  id            String        @id @default(uuid(7))
+  userId        String
+  userProfile   UserProfile   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mentorId      String
+  mentor        Mentor        @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  scheduledAt   DateTime
+  duration      Int
+  status        BookingStatus @default(PENDING)
+  totalAmount   Float
+  paymentStatus PaymentStatus @default(UNPAID)
+  meetingLink   String?
+  notes         String?       @db.Text
+  cancelReason  String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  review        Review?
+  payment       Payment?
+
+  @@index([userId])
+  @@index([mentorId])
+  @@index([status])
+  @@index([scheduledAt])
+  @@map("bookings")
+}

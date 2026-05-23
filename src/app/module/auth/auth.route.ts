@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { AuthController } from "./auth.controller.js";
+const router = Router();
+router.post("/register", AuthController.register);
+router.post("/login", AuthController.login);
+router.get("/me", checkAuth(), AuthController.getMe);
+router.post("/refresh-token", AuthController.refreshToken);
+router.post("/logout", checkAuth(), AuthController.logout);
+export const AuthRoutes = router;

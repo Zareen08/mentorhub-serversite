@@ -1,0 +1,33 @@
+import { Request, Response } from "express";
+import status from "http-status";
+import { catchAsync } from "../../shared/catchAsync.js";
+import { sendResponse } from "../../shared/sendResponse.js";
+import { ReviewService } from "./review.service.js";
+
+const createReview = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReviewService.createReview(req.user!.userId, req.body);
+  sendResponse(res, { httpStatusCode: status.CREATED, success: true, message: "Review submitted", data: result });
+});
+
+const getMentorReviews = catchAsync(async (req: Request, res: Response) => {
+  const mentorId = Array.isArray(req.params.mentorId) ? req.params.mentorId[0] : req.params.mentorId;
+  const result = await ReviewService.getMentorReviews(mentorId, req.query as any);
+  sendResponse(res, { httpStatusCode: status.OK, success: true, message: "Reviews fetched", data: result.data, meta: result.meta });
+});
+
+const getAll = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReviewService.getAllReviews(req.query as any);
+  sendResponse(res, { httpStatusCode: status.OK, success: true, message: "All reviews fetched", data: result.data, meta: result.meta });
+});
+
+const getMyReviews = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReviewService.getMyReviews(req.user!.userId);
+  sendResponse(res, { httpStatusCode: status.OK, success: true, message: "My reviews fetched", data: result });
+});
+
+export const ReviewController = { 
+  createReview, 
+  getMentorReviews, 
+  getAll, 
+  getMyReviews 
+};

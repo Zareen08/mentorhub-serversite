@@ -1,0 +1,12 @@
+import { Router } from "express";
+import { checkAuth } from "../../middleware/checkAuth.js";
+import { AIController } from "./ai.controller.js";
+const router = Router();
+router.post("/match", AIController.matchMentors);
+router.post("/chat", AIController.chat);
+router.get("/recommendations", checkAuth(), AIController.getRecommendations);
+router.get("/insights", checkAuth("ADMIN", "SUPER_ADMIN"), AIController.getPlatformInsights);
+router.get("/summary/:bookingId", checkAuth(), AIController.generateSessionSummary);
+router.post("/session-summary/:bookingId", checkAuth(), AIController.generateSessionSummary);
+router.post("/sentiment", AIController.analyzeSentiment);
+export const AIRoutes = router;
